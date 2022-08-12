@@ -1,0 +1,4 @@
+server:
+  port: 9292
+  servlet:
+    context-path: /lan

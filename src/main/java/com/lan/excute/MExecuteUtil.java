@@ -1,28 +1,29 @@
 package com.lan.excute;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.lan.Application;
+import com.lan.bean.Lan;
+import com.lan.bean.Yang;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.scp.client.ScpClient;
 import org.apache.sshd.scp.client.ScpClientCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 
 public class MExecuteUtil {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MExecuteUtil.class);
+    public static void execute(List<Lan> lans, String filePath) throws Exception {
+        List<Yang> serverInfo = lans.get(0).getServerInfo();
 
-    public static void execute(JSONObject configJsonObject, String filePath) throws Exception {
-
-
-        JSONArray mcc = configJsonObject.getJSONArray("mcc");
-        int size = mcc.size();
-        for (int i = 0; i < size; i++) {
-            JSONObject jsonObject = mcc.getJSONObject(i);
-            String ip = jsonObject.getString("ip");
-            String userName = jsonObject.getString("userName");
-            String passWord = jsonObject.getString("passWord");
-            String path = jsonObject.getString("path");
+        for (Yang yang : serverInfo) {
+            String ip = yang.getIp();
+            String userName = yang.getUserName();
+            String passWord = yang.getPassWord();
+            String path = yang.getPath();
             // 创建 SSH客户端
             SshClient client = SshClient.setUpDefaultClient();
             // 启动 SSH客户端
@@ -45,11 +46,10 @@ public class MExecuteUtil {
                 // ScpClient.Option.Recursive：递归copy，可以将子文件夹和子文件遍历copy
                 for (File file1 : files) {
                     String absolutePath = file1.getAbsolutePath();
-                    System.out.println("Scp beginning." + absolutePath);
+                    LOGGER.info("Scp beginning.", absolutePath);
                     scpClient.upload(absolutePath, path, ScpClient.Option.Recursive);
-                    System.out.println("Scp finished." + path);
+                    LOGGER.info("Scp finished." , path);
                 }
-
 
                 // 释放 SCP客户端
                 if (scpClient != null) {
@@ -67,7 +67,6 @@ public class MExecuteUtil {
                     client.close();
                 }
             }
-
 
         }
 

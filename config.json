@@ -1,16 +1,24 @@
-{
-  "mcc": [
-    {
-      "ip": "120.48.91.111",
-      "userName": "root",
-      "passWord": "Huawei@123",
-      "path": "/lan"
-    },
-    {
-      "ip": "192.168.137.36",
-      "userName": "root",
-      "passWord": "Huawei@123",
-      "path": "/lan"
-    }
-  ]
-}
+[
+  {
+    "serverName": "ares-mmc",
+    "serverInfo": [
+      {
+        "ip": "120.48.91.111",
+        "userName": "root",
+        "passWord": "Huawei@123",
+        "path": "/lan"
+      }
+    ]
+  },
+  {
+    "serverName": "inter-server",
+    "serverInfo": [
+      {
+        "ip": "120.48.91.111",
+        "userName": "root",
+        "passWord": "Huawei@123",
+        "path": "/yang"
+      }
+    ]
+  }
+]

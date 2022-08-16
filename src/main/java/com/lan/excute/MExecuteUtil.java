@@ -40,7 +40,6 @@ public class MExecuteUtil {
                 ScpClientCreator creator = ScpClientCreator.instance();
                 // 创建 SCP 客户端
                 ScpClient scpClient = creator.createScpClient(session);
-
                 File file = new File(filePath);
                 File[] files = file.listFiles();
                 // ScpClient.Option.Recursive：递归copy，可以将子文件夹和子文件遍历copy
